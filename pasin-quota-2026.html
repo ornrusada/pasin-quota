@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>โควตาไหล ปศิน 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg: #f5f5f8;
+    --card: #ffffff;
+    --card-border: #e2e2ea;
+    --accent: #6c5ce7;
+    --accent-glow: rgba(108, 92, 231, 0.2);
+    --danger: #e74c3c;
+    --danger-glow: rgba(231, 76, 60, 0.2);
+    --warning: #e67e22;
+    --warning-glow: rgba(230, 126, 34, 0.15);
+    --success: #27ae60;
+    --success-glow: rgba(39, 174, 96, 0.15);
+    --text: #1a1a2e;
+    --text-dim: #6b7280;
+    --text-muted: #9ca3af;
+    --borrowed: #e74c3c;
+    --own: #6c5ce7;
+    --remaining: #e8e8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Prompt', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 16px 100px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 32px 0 20px;
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--danger));
+    border-radius: 2px;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #1a1a2e, #6c5ce7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .header .subtitle {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    font-weight: 300;
+  }
+  .header .year-badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 16px;
+    background: linear-gradient(135deg, var(--accent), #a855f7);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+
+  /* Red Card Alert */
+  .red-card-alert {
+    margin: 20px 0;
+    padding: 16px;
+    background: linear-gradient(135deg, #fff5f5, #ffe8e8);
+    border: 1px solid rgba(231,76,60,0.25);
+    border-radius: 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(231,76,60,0.08);
+  }
+  .red-card-alert::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(231,76,60,0.06) 0%, transparent 70%);
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  .red-card-count {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--danger);
+    position: relative;
+  }
+  .red-card-label {
+    font-size: 13px;
+    color: var(--danger);
+    font-weight: 500;
+    position: relative;
+  }
+  .red-card-limit {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    position: relative;
+  }
+  .red-card-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    position: relative;
+  }
+  .red-card-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 2px solid var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.3s;
+  }
+  .red-card-dot.active {
+    border-color: var(--danger);
+    background: rgba(231,76,60,0.12);
+    box-shadow: 0 0 8px rgba(231,76,60,0.15);
+  }
+  .red-card-date {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    position: relative;
+  }
+
+  /* Stats Row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 14px 10px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .stat-value {
+    font-size: 28px;
+    font-weight: 800;
+  }
+  .stat-value.used { color: var(--danger); }
+  .stat-value.remain { color: var(--success); }
+  .stat-value.total { color: var(--accent); }
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  /* Section */
+  .section-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 24px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .icon {
+    font-size: 18px;
+  }
+
+  /* Monthly Cards */
+  .month-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: all 0.3s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .month-card.over-quota {
+    border-color: rgba(231,76,60,0.35);
+  }
+  .month-card.current-month {
+    border-color: rgba(108,92,231,0.4);
+    box-shadow: 0 2px 12px rgba(108,92,231,0.1);
+  }
+  .month-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .month-card-header:active {
+    background: rgba(0,0,0,0.02);
+  }
+  .month-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .month-donut {
+    width: 48px;
+    height: 48px;
+    position: relative;
+  }
+  .month-donut svg {
+    width: 48px;
+    height: 48px;
+    transform: rotate(-90deg);
+  }
+  .month-donut .center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .month-info h3 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+  .month-info .month-status {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .month-info .month-status.danger {
+    color: var(--danger);
+  }
+  .month-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .month-badge {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .month-badge.safe {
+    background: rgba(46,213,115,0.15);
+    color: var(--success);
+  }
+  .month-badge.warning {
+    background: rgba(255,165,2,0.15);
+    color: var(--warning);
+  }
+  .month-badge.danger {
+    background: rgba(255,71,87,0.15);
+    color: var(--danger);
+  }
+  .month-badge.future {
+    background: rgba(136,136,170,0.15);
+    color: var(--text-dim);
+  }
+  .expand-icon {
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+  }
+  .month-card.expanded .expand-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Month Details */
+  .month-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .month-card.expanded .month-details {
+    max-height: 800px;
+  }
+  .month-details-inner {
+    padding: 0 16px 16px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+
+  /* Quota Breakdown */
+  .quota-breakdown {
+    display: flex;
+    gap: 6px;
+    margin: 12px 0;
+  }
+  .quota-block {
+    height: 8px;
+    border-radius: 4px;
+    transition: all 0.3s;
+  }
+  .quota-block.own { background: var(--own); }
+  .quota-block.borrowed { background: var(--borrowed); }
+  .quota-block.remaining { background: var(--remaining); }
+  .quota-block.lent { background: var(--warning); opacity: 0.5; }
+
+  .quota-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 8px 0 12px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 3px;
+  }
+
+  /* Activity Item */
+  .activity-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    font-size: 12px;
+  }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-date {
+    color: var(--text-dim);
+    font-weight: 500;
+    white-space: nowrap;
+    min-width: 42px;
+  }
+  .activity-desc {
+    flex: 1;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .activity-tag {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 600;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .activity-tag.penalty {
+    background: rgba(255,71,87,0.2);
+    color: var(--danger);
+  }
+  .activity-tag.free {
+    background: rgba(46,213,115,0.15);
+    color: var(--success);
+  }
+  .activity-tag.borrowed {
+    background: rgba(255,165,2,0.15);
+    color: var(--warning);
+  }
+
+  /* Rules Section */
+  .rules-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .rule-item {
+    padding: 8px 0;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-dim);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .rule-item:last-child { border-bottom: none; }
+  .rule-item .rule-icon {
+    margin-right: 6px;
+  }
+  .rule-highlight {
+    color: var(--danger);
+    font-weight: 600;
+  }
+  .rule-money {
+    color: var(--warning);
+    font-weight: 600;
+  }
+
+  /* Dislike Section */
+  .dislike-card {
+    background: linear-gradient(135deg, #fff5f5, #fff0f0);
+    border: 1px solid rgba(231,76,60,0.2);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .dislike-item {
+    padding: 6px 0;
+    font-size: 12px;
+    color: #c0392b;
+    line-height: 1.5;
+  }
+
+  /* Warning Banner */
+  .warning-banner {
+    background: linear-gradient(135deg, #fff8f0, #fff0f0);
+    border: 1px solid rgba(230,126,34,0.3);
+    border-radius: 16px;
+    padding: 16px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .warning-banner .warn-icon {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .warning-banner .warn-text {
+    font-size: 12px;
+    color: var(--warning);
+    line-height: 1.6;
+    font-weight: 500;
+  }
+
+  /* Add Entry Button */
+  .fab-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--accent), #a855f7);
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(108,92,231,0.35);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .fab-btn:active {
+    transform: scale(0.92);
+  }
+
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal-overlay.active {
+    display: flex;
+  }
+  .modal-sheet {
+    background: #ffffff;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 480px;
+    padding: 20px 20px 40px;
+    animation: slideUp 0.3s ease;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  .modal-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--text-muted);
+    border-radius: 2px;
+    margin: 0 auto 16px;
+  }
+  .modal-title {
+    font-size: 17px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .form-group {
+    margin-bottom: 14px;
+  }
+  .form-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    display: block;
+    font-weight: 500;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: #f5f5f8;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'Prompt', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--accent);
+  }
+  .form-textarea {
+    resize: none;
+    height: 70px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--accent), #a855f7);
+    border: none;
+    border-radius: 14px;
+    color: white;
+    font-family: 'Prompt', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+  }
+  .btn-submit:active {
+    transform: scale(0.97);
+    opacity: 0.9;
+  }
+  .btn-cancel {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    color: var(--text-dim);
+    font-family: 'Prompt', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+
+  /* Progress Bar Annual */
+  .annual-progress {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 16px;
+    margin: 16px 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .annual-bar-container {
+    display: flex;
+    gap: 2px;
+    margin: 10px 0 6px;
+  }
+  .annual-month-bar {
+    flex: 1;
+    height: 28px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    background: var(--remaining);
+  }
+  .annual-month-bar .fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: height 0.5s ease;
+  }
+  .annual-month-bar .fill.own {
+    background: var(--own);
+  }
+  .annual-month-bar .fill.over {
+    background: var(--borrowed);
+  }
+  .annual-month-label {
+    display: flex;
+    gap: 2px;
+    margin-top: 4px;
+  }
+  .annual-month-label span {
+    flex: 1;
+    text-align: center;
+    font-size: 8px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* Emoji Meter */
+  .emoji-meter {
+    text-align: center;
+    padding: 16px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    margin: 16px 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .emoji-meter .big-emoji {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .emoji-meter .meter-text {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+  .emoji-meter .meter-text strong {
+    color: var(--text);
+  }
+
+  /* Timestamp */
+  .last-updated {
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    padding: 20px 0;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 0; }
+
+  /* Animation */
+  .fade-in {
+    animation: fadeIn 0.5s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Future warning card */
+  .future-warning {
+    background: linear-gradient(135deg, #fff5f5, #f0eeff);
+    border: 1px dashed rgba(231,76,60,0.3);
+    border-radius: 16px;
+    padding: 16px;
+    margin: 16px 0;
+    text-align: center;
+  }
+  .future-warning p {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+  .future-warning .fw-highlight {
+    color: var(--danger);
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--success);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 999;
+    transition: transform 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Untrust Phrases */
+  .untrust-card {
+    background: linear-gradient(135deg, #fff8f0, #fff3e8);
+    border: 1px solid rgba(230,126,34,0.25);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .untrust-card .untrust-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--warning);
+    margin-bottom: 10px;
+  }
+  .untrust-phrase {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    background: rgba(230,126,34,0.08);
+    border-radius: 10px;
+    border-left: 3px solid var(--warning);
+  }
+  .untrust-phrase .phrase-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #c0392b;
+    font-style: italic;
+  }
+  .untrust-phrase .phrase-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Banned Places */
+  .banned-card {
+    background: linear-gradient(135deg, #f9f0ff, #fff0f5);
+    border: 1px solid rgba(142,68,173,0.25);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .banned-card::after {
+    content: '🚫';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 80px;
+    opacity: 0.06;
+  }
+  .banned-place {
+    padding: 12px;
+    margin-bottom: 8px;
+    background: rgba(231,76,60,0.06);
+    border: 1px solid rgba(231,76,60,0.15);
+    border-radius: 12px;
+    position: relative;
+  }
+  .banned-place:last-child { margin-bottom: 0; }
+  .banned-place-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--danger);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .banned-place-reason {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    line-height: 1.6;
+    padding-left: 24px;
+  }
+  .banned-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--danger);
+    color: #fff;
+    border-radius: 6px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast">บันทึกสำเร็จ!</div>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header fade-in">
+    <h1>โควตาไหล ปศิน</h1>
+    <div class="subtitle">ระบบติดตามโควตาเที่ยว / ไหล ประจำปี</div>
+    <div class="year-badge">2 0 2 6</div>
+  </div>
+
+  <!-- Red Card Alert -->
+  <div class="red-card-alert fade-in">
+    <div class="red-card-count">1 / 3</div>
+    <div class="red-card-label">ใบแดงสะสม</div>
+    <div class="red-card-limit">เกิน 3 ใบ = เลิกกัน หย่า แยกย้าย</div>
+    <div class="red-card-dots">
+      <div class="red-card-dot active">🚩</div>
+      <div class="red-card-dot"></div>
+      <div class="red-card-dot"></div>
+    </div>
+    <div class="red-card-date">🚩 ครั้งที่ 1: 30 ม.ค. 2026</div>
+  </div>
+
+  <!-- Stats Overview -->
+  <div class="stats-row fade-in">
+    <div class="stat-card">
+      <div class="stat-value used">23</div>
+      <div class="stat-label">ใช้ไปแล้ว (วัน)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value remain">36</div>
+      <div class="stat-label">เหลืออยู่ (วัน)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value total">59</div>
+      <div class="stat-label">โควตาทั้งปี</div>
+    </div>
+  </div>
+
+  <!-- Emoji Meter -->
+  <div class="emoji-meter fade-in">
+    <span class="big-emoji">😰</span>
+    <div class="meter-text">
+      ผ่านมา <strong>4 เดือน</strong> ใช้ไปแล้ว <strong>23 วัน</strong><br>
+      เฉลี่ย <strong>5.75 วัน/เดือน</strong> — เกินโควตาทุกเดือน!<br>
+      <span style="color: var(--danger); font-weight: 600;">ยืมโควตาเดือนถัดไปมาตลอด 4 เดือนติด</span>
+    </div>
+  </div>
+
+  <!-- Annual Progress -->
+  <div class="annual-progress fade-in">
+    <div style="font-size: 13px; font-weight: 600;">ภาพรวมทั้งปี</div>
+    <div class="annual-bar-container">
+      <!-- JAN: 8/5 = over -->
+      <div class="annual-month-bar">
+        <div class="fill over" style="height: 100%;"></div>
+      </div>
+      <!-- FEB: 5/5 = full, but used borrowed -->
+      <div class="annual-month-bar">
+        <div class="fill over" style="height: 100%;"></div>
+      </div>
+      <!-- MAR: 5/5 -->
+      <div class="annual-month-bar">
+        <div class="fill over" style="height: 100%;"></div>
+      </div>
+      <!-- APR: 5/5 -->
+      <div class="annual-month-bar">
+        <div class="fill over" style="height: 100%;"></div>
+      </div>
+      <!-- MAY: 0/4 remaining -->
+      <div class="annual-month-bar">
+        <div class="fill own" style="height: 0%;"></div>
+      </div>
+      <!-- JUN-DEC: untouched -->
+      <div class="annual-month-bar"><div class="fill own" style="height: 0%;"></div></div>
+      <div class="annual-month-bar"><div class="fill own" style="height: 0%;"></div></div>
+      <div class="annual-month-bar"><div class="fill own" style="height: 0%;"></div></div>
+      <div class="annual-month-bar"><div class="fill own" style="height: 0%;"></div></div>
+      <div class="annual-month-bar"><div class="fill own" style="height: 0%;"></div></div>
+      <div class="annual-month-bar"><div class="fill own" style="height: 0%;"></div></div>
+      <div class="annual-month-bar"><div class="fill own" style="height: 0%;"></div></div>
+    </div>
+    <div class="annual-month-label">
+      <span>ม.ค.</span><span>ก.พ.</span><span>มี.ค.</span><span>เม.ย.</span>
+      <span>พ.ค.</span><span>มิ.ย.</span><span>ก.ค.</span><span>ส.ค.</span>
+      <span>ก.ย.</span><span>ต.ค.</span><span>พ.ย.</span><span>ธ.ค.</span>
+    </div>
+    <div class="quota-legend" style="margin-top: 10px;">
+      <div class="legend-item"><div class="legend-dot" style="background: var(--own);"></div> ใช้ในโควตา</div>
+      <div class="legend-item"><div class="legend-dot" style="background: var(--borrowed);"></div> เกินโควตา (ยืมเดือนถัดไป)</div>
+      <div class="legend-item"><div class="legend-dot" style="background: var(--remaining);"></div> ยังไม่ใช้</div>
+    </div>
+  </div>
+
+  <!-- Monthly Breakdown -->
+  <div class="section-title"><span class="icon">📊</span> โควตารายเดือน</div>
+
+  <!-- JAN -->
+  <div class="month-card over-quota" id="month-jan">
+    <div class="month-card-header" onclick="toggleMonth('jan')">
+      <div class="month-left">
+        <div class="month-donut">
+          <svg viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--remaining)" stroke-width="4"/>
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--own)" stroke-width="4"
+              stroke-dasharray="87.96" stroke-dashoffset="0" stroke-linecap="round"/>
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--borrowed)" stroke-width="4"
+              stroke-dasharray="87.96" stroke-dashoffset="-55.0" stroke-linecap="round"
+              style="stroke-dasharray: 26.4 61.56;"/>
+          </svg>
+          <div class="center-text" style="color: var(--danger);">8/5</div>
+        </div>
+        <div class="month-info">
+          <h3>มกราคม</h3>
+          <div class="month-status danger">เกินโควตา! ยืม ก.พ. 3 วัน</div>
+        </div>
+      </div>
+      <div class="month-right">
+        <span class="month-badge danger">เกิน +3</span>
+        <span class="expand-icon">▼</span>
+      </div>
+    </div>
+    <div class="month-details">
+      <div class="month-details-inner">
+        <div class="quota-breakdown">
+          <div class="quota-block own" style="flex: 5;"></div>
+          <div class="quota-block borrowed" style="flex: 3;"></div>
+        </div>
+        <div class="quota-legend">
+          <div class="legend-item"><div class="legend-dot" style="background: var(--own);"></div> โควตา ม.ค. 5 วัน</div>
+          <div class="legend-item"><div class="legend-dot" style="background: var(--borrowed);"></div> ยืม ก.พ. 3 วัน</div>
+        </div>
+        <div style="font-size: 11px; color: var(--text-muted); padding: 4px 0;">📝 รายละเอียดไม่ได้บันทึกไว้สำหรับเดือนนี้</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEB -->
+  <div class="month-card over-quota" id="month-feb">
+    <div class="month-card-header" onclick="toggleMonth('feb')">
+      <div class="month-left">
+        <div class="month-donut">
+          <svg viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--remaining)" stroke-width="4"/>
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--own)" stroke-width="4"
+              stroke-dasharray="17.6 70.36" stroke-dashoffset="0" stroke-linecap="round"/>
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--borrowed)" stroke-width="4"
+              stroke-dasharray="26.4 61.56" stroke-dashoffset="-17.6" stroke-linecap="round"/>
+          </svg>
+          <div class="center-text" style="color: var(--danger);">5/2</div>
+        </div>
+        <div class="month-info">
+          <h3>กุมภาพันธ์</h3>
+          <div class="month-status danger">โควตาเหลือ 2 ยืม มี.ค. 3 วัน</div>
+        </div>
+      </div>
+      <div class="month-right">
+        <span class="month-badge danger">เกิน +3</span>
+        <span class="expand-icon">▼</span>
+      </div>
+    </div>
+    <div class="month-details">
+      <div class="month-details-inner">
+        <div class="quota-breakdown">
+          <div class="quota-block own" style="flex: 2;"></div>
+          <div class="quota-block borrowed" style="flex: 3;"></div>
+        </div>
+        <div class="quota-legend">
+          <div class="legend-item"><div class="legend-dot" style="background: var(--own);"></div> โควตา ก.พ. 2 วัน (จาก 5 ถูกยืมไป 3)</div>
+          <div class="legend-item"><div class="legend-dot" style="background: var(--borrowed);"></div> ยืม มี.ค. 3 วัน</div>
+        </div>
+        <div style="font-size: 11px; color: var(--text-muted); padding: 4px 0;">📝 รายละเอียดไม่ได้บันทึกไว้สำหรับเดือนนี้</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAR -->
+  <div class="month-card over-quota" id="month-mar">
+    <div class="month-card-header" onclick="toggleMonth('mar')">
+      <div class="month-left">
+        <div class="month-donut">
+          <svg viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--remaining)" stroke-width="4"/>
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--own)" stroke-width="4"
+              stroke-dasharray="17.6 70.36" stroke-dashoffset="0" stroke-linecap="round"/>
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--borrowed)" stroke-width="4"
+              stroke-dasharray="26.4 61.56" stroke-dashoffset="-17.6" stroke-linecap="round"/>
+          </svg>
+          <div class="center-text" style="color: var(--danger);">5/2</div>
+        </div>
+        <div class="month-info">
+          <h3>มีนาคม</h3>
+          <div class="month-status danger">โควตาเหลือ 2 ยืม เม.ย. 3 วัน</div>
+        </div>
+      </div>
+      <div class="month-right">
+        <span class="month-badge danger">เกิน +3</span>
+        <span class="expand-icon">▼</span>
+      </div>
+    </div>
+    <div class="month-details">
+      <div class="month-details-inner">
+        <div class="quota-breakdown">
+          <div class="quota-block own" style="flex: 2;"></div>
+          <div class="quota-block borrowed" style="flex: 3;"></div>
+        </div>
+        <div class="quota-legend">
+          <div class="legend-item"><div class="legend-dot" style="background: var(--own);"></div> โควตา มี.ค. 2 วัน</div>
+          <div class="legend-item"><div class="legend-dot" style="background: var(--borrowed);"></div> ยืม เม.ย. 3 วัน</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-date">4 มี.ค.</div>
+          <div class="activity-desc">เลิกงานไวไปต่อ HOME → Salone <span class="activity-tag borrowed">โควตา มี.ค.</span></div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-date">4 มี.ค.</div>
+          <div class="activity-desc">กลับเกินตี 3 <span class="activity-tag penalty">หัก +1 วัน</span></div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-date">9 มี.ค.</div>
+          <div class="activity-desc">Salone เที่ยวกับลูกค้า <span class="activity-tag borrowed">ยืม เม.ย.</span></div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-date">18 มี.ค.</div>
+          <div class="activity-desc">ไปหาพี่ช้าง 23.20-01.00 <span class="activity-tag borrowed">ยืม เม.ย.</span></div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-date">19 มี.ค.</div>
+          <div class="activity-desc">เที่ยวกับเพื่อน ร้าน Grey's Chamber <span class="activity-tag free">เมียไปด้วย ไม่หัก</span></div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-date">22 มี.ค.</div>
+          <div class="activity-desc">เที่ยวกับพี่โอ๋ Artro <span class="activity-tag free">เมียไปด้วย ไม่หัก</span></div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-date">23 มี.ค.</div>
+          <div class="activity-desc">เลิกงานไวไปต่อหาพี่ช้าง 00.30-01.30 <span class="activity-tag borrowed">ยืม เม.ย.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APR (current) -->
+  <div class="month-card current-month over-quota" id="month-apr">
+    <div class="month-card-header" onclick="toggleMonth('apr')">
+      <div class="month-left">
+        <div class="month-donut">
+          <svg viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--remaining)" stroke-width="4"/>
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--own)" stroke-width="4"
+              stroke-dasharray="17.6 70.36" stroke-dashoffset="0" stroke-linecap="round"/>
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--borrowed)" stroke-width="4"
+              stroke-dasharray="8.8 79.16" stroke-dashoffset="-17.6" stroke-linecap="round"/>
+          </svg>
+          <div class="center-text" style="color: var(--danger);">0</div>
+        </div>
+        <div class="month-info">
+          <h3>เมษายน <span style="font-size:10px; color: var(--accent);">◉ เดือนนี้</span></h3>
+          <div class="month-status danger">โควตาหมด! ยืม พ.ค. 1 วัน</div>
+        </div>
+      </div>
+      <div class="month-right">
+        <span class="month-badge danger">หมด!</span>
+        <span class="expand-icon">▼</span>
+      </div>
+    </div>
+    <div class="month-details">
+      <div class="month-details-inner">
+        <div class="quota-breakdown">
+          <div class="quota-block own" style="flex: 2;"></div>
+          <div class="quota-block borrowed" style="flex: 1;"></div>
+        </div>
+        <div class="quota-legend">
+          <div class="legend-item"><div class="legend-dot" style="background: var(--own);"></div> โควตา เม.ย. 2 วัน (จาก 5 ถูกยืมไป 3)</div>
+          <div class="legend-item"><div class="legend-dot" style="background: var(--borrowed);"></div> ยืม พ.ค. 1 วัน</div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-date">4 เม.ย.</div>
+          <div class="activity-desc">เลิกงาน 20.00 ไหลไป Tonic <span class="activity-tag borrowed">โควตา เม.ย.</span></div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-date">16 เม.ย.</div>
+          <div class="activity-desc">เลิกงาน 00.00 ไหลไป Tonic กับเด็กเอ็น <span class="activity-tag borrowed">โควตา เม.ย.</span></div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-date">16 เม.ย.</div>
+          <div class="activity-desc">ไหลไปต่อ Arttro กลับ 05.30 <span class="activity-tag penalty">กลับเกินตี 3 หัก +1</span> <span class="activity-tag borrowed">ยืม พ.ค.</span></div>
+        </div>
+        <div style="margin-top: 12px; padding: 10px; background: #fff5f5; border: 1px solid rgba(231,76,60,0.15); border-radius: 10px; text-align: center;">
+          <div style="font-size: 20px;">🚫</div>
+          <div style="font-size: 12px; color: var(--danger); font-weight: 600;">เมษายน โควตาหมดแล้ว!</div>
+          <div style="font-size: 11px; color: var(--text-dim); margin-top: 2px;">ไหลอีก = ยืมจาก พ.ค. (เหลือ 4 วัน)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAY -->
+  <div class="month-card" id="month-may">
+    <div class="month-card-header" onclick="toggleMonth('may')">
+      <div class="month-left">
+        <div class="month-donut">
+          <svg viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--remaining)" stroke-width="4"/>
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--warning)" stroke-width="4"
+              stroke-dasharray="8.8 79.16" stroke-dashoffset="0" stroke-linecap="round" opacity="0.5"/>
+          </svg>
+          <div class="center-text" style="color: var(--warning);">4</div>
+        </div>
+        <div class="month-info">
+          <h3>พฤษภาคม</h3>
+          <div class="month-status" style="color: var(--warning);">ถูกยืมไป 1 วัน เหลือ 4</div>
+        </div>
+      </div>
+      <div class="month-right">
+        <span class="month-badge warning">เหลือ 4</span>
+        <span class="expand-icon">▼</span>
+      </div>
+    </div>
+    <div class="month-details">
+      <div class="month-details-inner">
+        <div class="quota-breakdown">
+          <div class="quota-block lent" style="flex: 1;"></div>
+          <div class="quota-block remaining" style="flex: 4;"></div>
+        </div>
+        <div class="quota-legend">
+          <div class="legend-item"><div class="legend-dot" style="background: var(--warning); opacity: 0.5;"></div> ถูกยืมโดย เม.ย. 1 วัน</div>
+          <div class="legend-item"><div class="legend-dot" style="background: var(--remaining);"></div> เหลือใช้ 4 วัน</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JUN - DEC -->
+  <div class="month-card" id="month-jun">
+    <div class="month-card-header" onclick="toggleMonth('jun')">
+      <div class="month-left">
+        <div class="month-donut">
+          <svg viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--remaining)" stroke-width="4"/>
+          </svg>
+          <div class="center-text" style="color: var(--success);">5</div>
+        </div>
+        <div class="month-info"><h3>มิถุนายน</h3><div class="month-status">เต็มโควตา 5 วัน</div></div>
+      </div>
+      <div class="month-right"><span class="month-badge future">เหลือ 5</span></div>
+    </div>
+  </div>
+
+  <div class="month-card" id="month-jul">
+    <div class="month-card-header" onclick="toggleMonth('jul')">
+      <div class="month-left">
+        <div class="month-donut">
+          <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="var(--remaining)" stroke-width="4"/></svg>
+          <div class="center-text" style="color: var(--success);">5</div>
+        </div>
+        <div class="month-info"><h3>กรกฎาคม</h3><div class="month-status">เต็มโควตา 5 วัน</div></div>
+      </div>
+      <div class="month-right"><span class="month-badge future">เหลือ 5</span></div>
+    </div>
+  </div>
+
+  <div class="month-card" id="month-aug">
+    <div class="month-card-header" onclick="toggleMonth('aug')">
+      <div class="month-left">
+        <div class="month-donut">
+          <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="var(--remaining)" stroke-width="4"/></svg>
+          <div class="center-text" style="color: var(--success);">5</div>
+        </div>
+        <div class="month-info"><h3>สิงหาคม</h3><div class="month-status">เต็มโควตา 5 วัน</div></div>
+      </div>
+      <div class="month-right"><span class="month-badge future">เหลือ 5</span></div>
+    </div>
+  </div>
+
+  <div class="month-card" id="month-sep">
+    <div class="month-card-header" onclick="toggleMonth('sep')">
+      <div class="month-left">
+        <div class="month-donut">
+          <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="var(--remaining)" stroke-width="4"/></svg>
+          <div class="center-text" style="color: var(--success);">5</div>
+        </div>
+        <div class="month-info"><h3>กันยายน</h3><div class="month-status">เต็มโควตา 5 วัน</div></div>
+      </div>
+      <div class="month-right"><span class="month-badge future">เหลือ 5</span></div>
+    </div>
+  </div>
+
+  <div class="month-card" id="month-oct">
+    <div class="month-card-header" onclick="toggleMonth('oct')">
+      <div class="month-left">
+        <div class="month-donut">
+          <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="var(--remaining)" stroke-width="4"/></svg>
+          <div class="center-text" style="color: var(--success);">5</div>
+        </div>
+        <div class="month-info"><h3>ตุลาคม</h3><div class="month-status">เต็มโควตา 5 วัน</div></div>
+      </div>
+      <div class="month-right"><span class="month-badge future">เหลือ 5</span></div>
+    </div>
+  </div>
+
+  <div class="month-card" id="month-nov">
+    <div class="month-card-header" onclick="toggleMonth('nov')">
+      <div class="month-left">
+        <div class="month-donut">
+          <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="var(--remaining)" stroke-width="4"/></svg>
+          <div class="center-text" style="color: var(--success);">5</div>
+        </div>
+        <div class="month-info"><h3>พฤศจิกายน</h3><div class="month-status">เต็มโควตา 5 วัน</div></div>
+      </div>
+      <div class="month-right"><span class="month-badge future">เหลือ 5</span></div>
+    </div>
+  </div>
+
+  <div class="month-card" id="month-dec">
+    <div class="month-card-header" onclick="toggleMonth('dec')">
+      <div class="month-left">
+        <div class="month-donut">
+          <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="var(--remaining)" stroke-width="4"/></svg>
+          <div class="center-text" style="color: var(--success);">5</div>
+        </div>
+        <div class="month-info"><h3>ธันวาคม</h3><div class="month-status">เต็มโควตา 5 วัน</div></div>
+      </div>
+      <div class="month-right"><span class="month-badge future">เหลือ 5</span></div>
+    </div>
+  </div>
+
+  <!-- Future Warning -->
+  <div class="future-warning">
+    <p>
+      <span class="fw-highlight">คำเตือนสำหรับไตรมาส 3-4</span><br><br>
+      หากยังยืมโควตาเดือนถัดไปเรื่อยๆ<br>
+      ปี 2027 อาจพิจารณา<strong style="color: var(--danger);"> ลดโควตาจาก 5 → 4 ครั้ง/เดือน</strong><br>
+      ถือว่า<span style="color: var(--danger);">ไม่มีวินัยในการรักษาโควตา</span>
+    </p>
+  </div>
+
+  <!-- Untrust Phrases -->
+  <div class="section-title"><span class="icon">🗣️</span> คำพูดที่เชื่อถือไม่ได้อีกต่อไป</div>
+  <div class="untrust-card">
+    <div class="untrust-title">บันทึกจากพฤติกรรมที่ผ่านมา — พูดแล้วไม่เป็นจริงซ้ำแล้วซ้ำเล่า</div>
+    <div class="untrust-phrase">
+      <span class="phrase-icon">🤥</span>
+      <span class="phrase-text">"แวะไปแป๊บเดียว"</span>
+    </div>
+    <div class="untrust-phrase">
+      <span class="phrase-icon">🤥</span>
+      <span class="phrase-text">"จะกลับแล้ว"</span>
+    </div>
+    <div class="untrust-phrase">
+      <span class="phrase-icon">🤥</span>
+      <span class="phrase-text">"กำลังจะกลับ"</span>
+    </div>
+    <div style="margin-top: 10px; padding: 8px 12px; background: rgba(231,76,60,0.08); border-radius: 8px; text-align: center;">
+      <div style="font-size: 11px; color: var(--danger); font-weight: 500; line-height: 1.6;">
+        คำพูดเหล่านี้ถูกพูดซ้ำหลายครั้ง แต่ผลลัพธ์จริงคือกลับถึงบ้านตี 5-6 เสมอ<br>
+        ต่อจากนี้ <strong>จะตัดสินจากการกระทำเท่านั้น ไม่ใช่คำพูด</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Banned Places -->
+  <div class="section-title"><span class="icon">🚫</span> สถานที่โดนแบน</div>
+  <div class="banned-card">
+    <div style="font-size: 11px; color: var(--text-dim); margin-bottom: 12px; line-height: 1.5;">
+      หลังจากนี้ หากไปสถานที่เหล่านี้ จะ<strong style="color: var(--danger);">ไม่ได้รับการไว้วางใจอีกต่อไป</strong>
+    </div>
+    <div class="banned-place">
+      <div class="banned-place-name">
+        ❌ Arttro Studio Barber <span class="banned-tag">BANNED</span>
+      </div>
+      <div class="banned-place-reason">
+        เหตุผล: ไปทีไรกลับถึงบ้านฟ้าสว่างตลอด ตี 5 หรือ 6 โมงเช้า บ่อยครั้ง<br>
+        ล่าสุด: 16 เม.ย. 2026 — กลับถึงบ้าน 05.30
+      </div>
+    </div>
+    <div class="banned-place">
+      <div class="banned-place-name">
+        ❌ K25 <span class="banned-tag">BANNED</span>
+      </div>
+      <div class="banned-place-reason">
+        เหตุผล: มีผู้หญิงเยอะมาก สภาพแวดล้อมดูอันตราย<br>
+        หากเมาไม่มีสติอาจพลาดได้
+      </div>
+    </div>
+  </div>
+
+  <!-- Rules -->
+  <div class="section-title"><span class="icon">📋</span> กฎกติกา</div>
+  <div class="rules-card">
+    <div class="rule-item"><span class="rule-icon">🔖</span> โควตาไหล/เที่ยวกับเพื่อน = <strong>5 ครั้ง/เดือน</strong></div>
+    <div class="rule-item"><span class="rule-icon">🕐</span> กลับถึงบ้านเกินตี 3 = <span class="rule-highlight">หักเพิ่ม 1 วัน</span></div>
+    <div class="rule-item"><span class="rule-icon">🔄</span> ยืมโควตาเดือนถัดไปได้ แต่<span class="rule-highlight">ไม่สามารถยืมข้ามปี</span></div>
+    <div class="rule-item"><span class="rule-icon">🔖</span> ไหล = เลิกงานไวไปต่อ / หากคาดว่าจะเกินตี 3 ให้กลับบ้านเอง</div>
+    <div class="rule-item"><span class="rule-icon">🔖</span> เที่ยวที่เมียไม่ได้ไปด้วย = ไหล</div>
+    <div class="rule-item"><span class="rule-icon">⚠️</span> แวะหาเพื่อน = 30-60 นาที (เกินกว่านั้น = ไหล)</div>
+    <div class="rule-item"><span class="rule-icon">⚠️</span> ไหลแล้วไม่อัพเดท = <span class="rule-highlight">โดนปรับ หัก 2 วัน</span></div>
+    <div class="rule-item"><span class="rule-icon">💸</span> ให้ Tips ผู้หญิง / เลี้ยงเพื่อน = <span class="rule-money">โดนปรับ 10 เท่า หักจากบัญชีเงินเก็บ</span><br>
+      <span style="font-size: 11px; color: var(--text-muted); margin-left: 26px;">เช่น ให้ Tips 2,000 → โดนหัก 20,000</span></div>
+  </div>
+
+  <!-- Dislikes -->
+  <div class="section-title"><span class="icon">🚫</span> สิ่งที่เมียไม่ชอบ</div>
+  <div class="dislike-card">
+    <div class="dislike-item">❌ เอารถตู้ + คนขับไปบริการผู้หญิงคนอื่น</div>
+    <div class="dislike-item">❌ โชว์ป๋า เลี้ยงคนอื่น ทั้งๆ ที่เงินในกระเป๋ามีนิดเดียว</div>
+    <div class="dislike-item">❌ โอบหญิงต่อหน้าเพื่อนพี่น้องเมีย = ไม่ให้เกียรติ วางตัวไม่ดี</div>
+  </div>
+
+  <!-- Warning Banner -->
+  <div class="warning-banner">
+    <span class="warn-icon">⚠️</span>
+    <div class="warn-text">
+      เดือนไหนใช้โควตาเกิน = <strong style="color: var(--danger);">ใบแดง 🚩</strong><br>
+      ใบแดงเกิน 3 ครั้ง = <strong style="color: var(--danger);">เลิกกัน หย่า แยกย้าย</strong><br><br>
+      <span style="font-size: 14px;">สถิติใบแดง 2026: <strong style="color: var(--danger); font-size: 18px;">1 / 3</strong></span>
+    </div>
+  </div>
+
+  <div class="last-updated" id="lastUpdated">อัพเดทล่าสุด: 17 เม.ย. 2026, 00:00</div>
+</div>
+
+<!-- FAB Button -->
+<button class="fab-btn" onclick="openModal()">+</button>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">บันทึกการไหล</div>
+    <form onsubmit="saveEntry(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">วันที่</label>
+          <input type="date" class="form-input" id="entryDate" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">ประเภท</label>
+          <select class="form-select" id="entryType">
+            <option value="ไหล">🔖 ไหล</option>
+            <option value="เที่ยว">🎉 เที่ยว (เมียไม่ไป)</option>
+            <option value="แวะหาเพื่อน">👋 แวะหาเพื่อน</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">สถานที่ / รายละเอียด</label>
+        <textarea class="form-textarea" id="entryDesc" placeholder="เช่น ไหลไป Tonic กับเพื่อน"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">เวลาออก</label>
+          <input type="time" class="form-input" id="entryTimeOut">
+        </div>
+        <div class="form-group">
+          <label class="form-label">เวลากลับถึงบ้าน</label>
+          <input type="time" class="form-input" id="entryTimeBack">
+        </div>
+      </div>
+      <div style="padding: 8px; background: #fff8f0; border: 1px solid rgba(230,126,34,0.15); border-radius: 10px; margin: 8px 0; font-size: 11px; color: var(--warning); text-align: center;">
+        ⚠️ กลับเกินตี 3 = หักเพิ่ม 1 วัน | ไหลไม่อัพเดท = หัก 2 วัน
+      </div>
+      <button type="submit" class="btn-submit">บันทึก</button>
+      <button type="button" class="btn-cancel" onclick="closeModal()">ยกเลิก</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Toggle month details
+  function toggleMonth(month) {
+    const card = document.getElementById('month-' + month);
+    card.classList.toggle('expanded');
+  }
+
+  // Open APR by default (current month)
+  document.addEventListener('DOMContentLoaded', function() {
+    toggleMonth('apr');
+    updateTimestamp();
+  });
+
+  // Modal
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('active');
+    document.getElementById('entryDate').valueAsDate = new Date();
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  // Save entry
+  function saveEntry(e) {
+    e.preventDefault();
+    const date = document.getElementById('entryDate').value;
+    const type = document.getElementById('entryType').value;
+    const desc = document.getElementById('entryDesc').value;
+    const timeOut = document.getElementById('entryTimeOut').value;
+    const timeBack = document.getElementById('entryTimeBack').value;
+
+    // Check if past 3am
+    let penalty = false;
+    if (timeBack) {
+      const [h, m] = timeBack.split(':').map(Number);
+      if (h >= 3 && h < 12) {
+        penalty = true;
+      }
+    }
+
+    const entry = { date, type, desc, timeOut, timeBack, penalty };
+
+    // Save to local array (in-memory)
+    if (!window.savedEntries) window.savedEntries = [];
+    window.savedEntries.push(entry);
+
+    // Show toast
+    const toast = document.getElementById('toast');
+    let msg = 'บันทึกสำเร็จ!';
+    if (penalty) msg = '⚠️ กลับเกินตี 3 — หักเพิ่ม 1 วัน!';
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+
+    closeModal();
+    updateTimestamp();
+
+    // Reset form
+    document.getElementById('entryDesc').value = '';
+    document.getElementById('entryTimeOut').value = '';
+    document.getElementById('entryTimeBack').value = '';
+  }
+
+  function updateTimestamp() {
+    const now = new Date();
+    const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+    const str = now.getDate() + ' ' + months[now.getMonth()] + ' ' + (now.getFullYear() + 543 - 543) + ', ' +
+      String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    document.getElementById('lastUpdated').textContent = 'อัพเดทล่าสุด: ' + str;
+  }
+</script>
+
+</body>
+</html>

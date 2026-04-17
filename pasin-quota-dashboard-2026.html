@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🎯 โควตาไหล 2026 — Pasin Tracker</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg: #f5f6fa;
+    --card: #ffffff;
+    --card-hover: #f0f1f5;
+    --accent: #6c5ce7;
+    --accent-glow: rgba(108, 92, 231, 0.15);
+    --green: #00a87d;
+    --green-glow: rgba(0, 168, 125, 0.15);
+    --yellow: #e8a317;
+    --yellow-glow: rgba(232, 163, 23, 0.15);
+    --red: #d35400;
+    --red-glow: rgba(211, 84, 0, 0.15);
+    --danger: #c0392b;
+    --danger-glow: rgba(192, 57, 43, 0.2);
+    --text: #2d3436;
+    --text-dim: #858e96;
+    --text-bright: #1a1a2e;
+    --border: rgba(0,0,0,0.07);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Prompt', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(108, 92, 231, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(192, 57, 43, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(0, 168, 125, 0.03) 0%, transparent 50%);
+    z-index: -1;
+    animation: bgPulse 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes bgPulse {
+    0% { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
+
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 16px;
+    padding-bottom: 100px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 24px 16px;
+    margin-bottom: 20px;
+  }
+
+  .header-icon {
+    font-size: 48px;
+    margin-bottom: 8px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  .header h1 {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #5b4cdb, #8b7cf6, #e84393);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+
+  .header p {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-top: 4px;
+    font-weight: 300;
+  }
+
+  /* Red Flag Alert */
+  .red-flag-alert {
+    background: linear-gradient(135deg, rgba(192, 57, 43, 0.08), rgba(192, 57, 43, 0.03));
+    border: 1px solid rgba(192, 57, 43, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: alertPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes alertPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(214, 48, 49, 0.1); }
+    50% { box-shadow: 0 0 40px rgba(214, 48, 49, 0.25); }
+  }
+
+  .red-flag-count {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--danger);
+    line-height: 1;
+  }
+
+  .red-flag-label {
+    font-size: 14px;
+    color: var(--red);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  .red-flag-bar {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  .flag-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .flag-dot.active {
+    background: var(--danger);
+    box-shadow: 0 0 15px var(--danger-glow);
+    animation: flagBlink 1.5s ease-in-out infinite;
+  }
+
+  .flag-dot.inactive {
+    background: rgba(0,0,0,0.03);
+    border: 1px dashed rgba(0,0,0,0.15);
+  }
+
+  @keyframes flagBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .red-flag-warning {
+    font-size: 11px;
+    color: rgba(214, 48, 49, 0.8);
+    margin-top: 10px;
+    font-weight: 500;
+  }
+
+  /* Year Progress */
+  .year-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  /* Month Cards */
+  .month-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .month-card:active {
+    transform: scale(0.98);
+  }
+
+  .month-header {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    cursor: pointer;
+    gap: 14px;
+  }
+
+  .month-chart {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+  }
+
+  .month-chart canvas {
+    width: 56px;
+    height: 56px;
+  }
+
+  .chart-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-bright);
+  }
+
+  .month-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .month-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-bright);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .month-status {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .month-bar {
+    height: 6px;
+    background: rgba(0,0,0,0.06);
+    border-radius: 3px;
+    margin-top: 8px;
+    overflow: hidden;
+    display: flex;
+  }
+
+  .month-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.8s ease;
+  }
+
+  .month-bar-own {
+    background: var(--green);
+  }
+
+  .month-bar-borrowed {
+    background: var(--yellow);
+  }
+
+  .month-bar-lent {
+    background: var(--red);
+    opacity: 0.5;
+  }
+
+  .month-chevron {
+    font-size: 18px;
+    color: var(--text-dim);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .month-card.expanded .month-chevron {
+    transform: rotate(180deg);
+  }
+
+  .month-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .month-card.expanded .month-detail {
+    max-height: 1000px;
+  }
+
+  .month-detail-inner {
+    padding: 0 16px 16px;
+  }
+
+  .quota-breakdown {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .quota-chip {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .chip-own {
+    background: rgba(0, 168, 125, 0.1);
+    color: var(--green);
+    border: 1px solid rgba(0, 168, 125, 0.25);
+  }
+
+  .chip-borrowed {
+    background: rgba(232, 163, 23, 0.1);
+    color: var(--yellow);
+    border: 1px solid rgba(232, 163, 23, 0.25);
+  }
+
+  .chip-remaining {
+    background: rgba(108, 92, 231, 0.08);
+    color: var(--accent);
+    border: 1px solid rgba(108, 92, 231, 0.2);
+  }
+
+  .chip-empty {
+    background: rgba(192, 57, 43, 0.08);
+    color: var(--danger);
+    border: 1px solid rgba(192, 57, 43, 0.2);
+  }
+
+  .log-entry {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .log-entry:last-child {
+    border-bottom: none;
+  }
+
+  .log-date {
+    font-size: 11px;
+    color: var(--text-dim);
+    white-space: nowrap;
+    min-width: 50px;
+    padding-top: 2px;
+  }
+
+  .log-content {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .log-tag {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  .tag-normal { background: rgba(0,168,125,0.1); color: var(--green); }
+  .tag-penalty { background: rgba(192,57,43,0.1); color: var(--danger); }
+  .tag-borrowed { background: rgba(232,163,23,0.1); color: var(--yellow); }
+  .tag-free { background: rgba(108,92,231,0.08); color: var(--accent); }
+
+  /* Rules Section */
+  .rules-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .rules-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .rule-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  .rule-item:last-child { border-bottom: none; }
+
+  .rule-icon {
+    display: inline;
+    margin-right: 6px;
+  }
+
+  /* Don't Like Section */
+  .dont-like {
+    background: linear-gradient(135deg, rgba(192,57,43,0.06), rgba(192,57,43,0.02));
+    border: 1px solid rgba(192,57,43,0.15);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+
+  .dont-like-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--danger);
+    margin-bottom: 12px;
+  }
+
+  .dont-like-item {
+    padding: 8px 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #c0392b;
+  }
+
+  /* Penalty Warning */
+  .penalty-section {
+    background: linear-gradient(135deg, rgba(232,163,23,0.06), rgba(232,163,23,0.02));
+    border: 1px solid rgba(232,163,23,0.2);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+
+  .penalty-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--yellow);
+    margin-bottom: 12px;
+  }
+
+  /* Psychological Banner */
+  .psych-banner {
+    background: linear-gradient(135deg, var(--accent), #a29bfe);
+    border-radius: 16px;
+    padding: 24px 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .psych-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    animation: shimmer 4s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(20%, 20%); }
+  }
+
+  .psych-number {
+    font-size: 64px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    position: relative;
+  }
+
+  .psych-label {
+    font-size: 14px;
+    color: rgba(255,255,255,0.9);
+    margin-top: 6px;
+    font-weight: 500;
+    position: relative;
+  }
+
+  .psych-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 8px;
+    position: relative;
+  }
+
+  /* Log Button */
+  .log-btn {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent), #a29bfe);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-family: 'Prompt', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 30px var(--accent-glow);
+    z-index: 100;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .log-btn:active {
+    transform: translateX(-50%) scale(0.95);
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+    z-index: 200;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal {
+    background: var(--card);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 480px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 24px;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  .modal-handle {
+    width: 40px;
+    height: 4px;
+    background: rgba(0,0,0,0.12);
+    border-radius: 2px;
+    margin: 0 auto 20px;
+  }
+
+  .modal h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    display: block;
+    font-weight: 500;
+  }
+
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: #f5f6fa;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-bright);
+    font-family: 'Prompt', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .form-textarea {
+    resize: none;
+    height: 80px;
+  }
+
+  .form-select option {
+    background: var(--card);
+    color: var(--text);
+  }
+
+  .form-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(192,57,43,0.04);
+    border: 1px solid rgba(192,57,43,0.15);
+    border-radius: 10px;
+  }
+
+  .form-check input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--danger);
+  }
+
+  .form-check label {
+    font-size: 13px;
+    color: var(--red);
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--accent), #a29bfe);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Prompt', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+
+  .cancel-btn {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-family: 'Prompt', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--green);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 300;
+    transition: transform 0.4s ease;
+    white-space: nowrap;
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Countdown */
+  .countdown-strip {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 14px;
+  }
+
+  .countdown-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transition: all 0.3s;
+  }
+
+  .countdown-dot.used {
+    background: var(--danger);
+    box-shadow: 0 0 6px var(--danger-glow);
+  }
+
+  .countdown-dot.remaining {
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green-glow);
+  }
+
+  .countdown-dot.borrowed {
+    background: var(--yellow);
+    box-shadow: 0 0 6px var(--yellow-glow);
+  }
+
+  /* Badge */
+  .badge-over {
+    background: var(--danger);
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+    animation: badgePulse 2s ease-in-out infinite;
+  }
+
+  @keyframes badgePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .badge-ok {
+    background: var(--green);
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .badge-future {
+    background: rgba(108,92,231,0.1);
+    color: var(--accent);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  /* Section title */
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 24px 0 12px;
+    padding-left: 4px;
+  }
+
+  /* Warning note at year end */
+  .year-warning {
+    background: linear-gradient(135deg, rgba(232,163,23,0.06), rgba(192,57,43,0.04));
+    border: 1px solid rgba(232,163,23,0.2);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .year-warning p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--yellow);
+  }
+
+  .year-warning .warn-big {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--danger);
+    margin-top: 8px;
+  }
+
+  /* Responsive */
+  @media (max-width: 360px) {
+    .container { padding: 10px; }
+    .header h1 { font-size: 20px; }
+    .psych-number { font-size: 48px; }
+  }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="container" id="app">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-icon">🎯</div>
+    <h1>โควตาไหล 2026</h1>
+    <p>Pasin Quota Tracker — อัปเดตล่าสุด <span id="lastUpdate">17/04/2026</span></p>
+  </div>
+
+  <!-- Red Flag Alert -->
+  <div class="red-flag-alert">
+    <div class="red-flag-count" id="flagCount">1 / 3</div>
+    <div class="red-flag-label">🚩 ใบแดงสะสม</div>
+    <div class="red-flag-bar" id="flagBar">
+      <div class="flag-dot active">🚩</div>
+      <div class="flag-dot inactive"></div>
+      <div class="flag-dot inactive"></div>
+    </div>
+    <div class="red-flag-warning">⚠️ โดนใบแดง 3 ครั้ง = เลิกกัน หย่า แยกย้าย</div>
+    <div style="font-size:11px; color:#858e96; margin-top:8px;">
+      🚩 ครั้งที่ 1: 30/01/2026
+    </div>
+  </div>
+
+  <!-- Psychological Banner — current month -->
+  <div class="psych-banner" id="psychBanner">
+    <div class="psych-number" id="psychNumber">0</div>
+    <div class="psych-label" id="psychLabel">โควตาเหลือเดือน APR</div>
+    <div class="psych-sub" id="psychSub">ใช้หมดแล้ว! หยิบยืม MAY มา 1 วัน</div>
+  </div>
+
+  <!-- Year Stats -->
+  <div class="year-summary">
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--red)" id="totalUsed">23</div>
+      <div class="stat-label">ไหลทั้งปี (JAN-APR)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--green)" id="totalRemaining">39</div>
+      <div class="stat-label">โควตาเหลือ (MAY-DEC)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--yellow)" id="totalBorrowed">10</div>
+      <div class="stat-label">ยืมข้ามเดือน</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent)" id="avgPerMonth">5.8</div>
+      <div class="stat-label">เฉลี่ย/เดือน (JAN-APR)</div>
+    </div>
+  </div>
+
+  <!-- Section: Monthly Breakdown -->
+  <div class="section-title">📊 โควตาแต่ละเดือน</div>
+
+  <div id="monthCards"></div>
+
+  <!-- Year-end Warning -->
+  <div class="year-warning">
+    <p>⚠️ หากไตรมาส 3-4 ยังใช้โควตาเดือนถัดไปอยู่เรื่อยๆ</p>
+    <p class="warn-big">ปี 2027 อาจลดโควตาจาก 5 → 4 ครั้ง/เดือน</p>
+    <p style="font-size:12px; margin-top:6px; color:var(--text-dim);">ถือว่าไม่มีวินัยในการรักษาโควตา</p>
+  </div>
+
+  <!-- Rules -->
+  <div class="section-title">📋 กฎเกณฑ์การไหล</div>
+
+  <div class="rules-section">
+    <div class="rules-title">📜 เงื่อนไขอยู่ร่วมกัน</div>
+    <div class="rule-item">
+      <span class="rule-icon">🎫</span>
+      โควตาไหล/เที่ยวกับเพื่อน <b>เดือนละ 5 ครั้ง</b>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">🕐</span>
+      กลับถึงบ้านเกินตี 3 → <b>หักเพิ่ม 1 วัน</b>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">🔄</span>
+      ใช้เกินสามารถ<b>ยืมเดือนถัดไป</b>ได้ แต่<b>ไม่สามารถยืมข้ามปี</b>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">🔖</span>
+      <b>ไหล</b> = เลิกงานไว ไปต่อ / เที่ยวเมียไม่ได้ไปด้วย — หากคาดว่าจะเกินตี 3 ให้กลับบ้านเอง
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">⏱️</span>
+      แวะหาเพื่อน 30-60 นาที ไม่นับ — <b>เกินกว่านั้น = ไหล</b>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">📱</span>
+      ไหลไม่อัปเดต → <b>โดนปรับ หักโควตา 2 วัน</b>
+    </div>
+    <div class="rule-item">
+      <span class="rule-icon">🚫</span>
+      โควตาไหล<b>ไม่สามารถเบิกข้ามปี</b>ได้
+    </div>
+  </div>
+
+  <!-- Penalty -->
+  <div class="penalty-section">
+    <div class="penalty-title">💸 บทลงโทษ</div>
+    <div class="rule-item">
+      <span class="rule-icon">💰</span>
+      ให้ Tips ผู้หญิง / เลี้ยงเพื่อน = <b>โดนปรับ 10 เท่า</b> หักจากเงินเก็บ
+    </div>
+    <div class="rule-item" style="font-size:12px; color:var(--text-dim);">
+      ตัวอย่าง: ให้ Tips 2,000 → โดนหัก 20,000 บาท
+    </div>
+  </div>
+
+  <!-- Don't Like -->
+  <div class="dont-like">
+    <div class="dont-like-title">❌ สิ่งที่เมียไม่ชอบ</div>
+    <div class="dont-like-item">❌ เอารถตู้ + คนขับไปบริการผู้หญิงคนอื่น</div>
+    <div class="dont-like-item">❌ โชว์ป๋า เลี้ยงคนอื่น ทั้งๆ ที่เงินในกระเป๋ามีนิดเดียว</div>
+    <div class="dont-like-item">❌ โอบหญิงต่อหน้าเพื่อนพี่น้องเมีย = ไม่ให้เกียรติ วางตัวไม่ดี</div>
+  </div>
+
+</div>
+
+<!-- Log Button -->
+<button class="log-btn" onclick="openModal()">
+  ✏️ บันทึกการไหล
+</button>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <h2>📝 บันทึกการไหลใหม่</h2>
+
+    <div class="form-group">
+      <label class="form-label">วันที่</label>
+      <input type="date" class="form-input" id="logDate">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">ประเภท</label>
+      <select class="form-select" id="logType">
+        <option value="ไหล">🔖 ไหล (เลิกงานไปต่อ)</option>
+        <option value="เที่ยว">🎉 เที่ยวกับเพื่อน</option>
+        <option value="แวะ">⏱️ แวะหาเพื่อน (30-60 นาที)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">ไปไหน / รายละเอียด</label>
+      <textarea class="form-textarea" id="logDetail" placeholder="เช่น ไป Tonic กับพี่โอ๋"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">กลับถึงบ้านเวลา (ประมาณ)</label>
+      <input type="time" class="form-input" id="logTime">
+    </div>
+
+    <div class="form-group">
+      <div class="form-check">
+        <input type="checkbox" id="logPenalty">
+        <label for="logPenalty">กลับเกินตี 3 (หักเพิ่ม 1 วัน)</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="form-check">
+        <input type="checkbox" id="logWifeThere">
+        <label for="logWifeThere">เมียไปด้วย (ไม่หักโควตา)</label>
+      </div>
+    </div>
+
+    <button class="submit-btn" onclick="submitLog()">💾 บันทึก</button>
+    <button class="cancel-btn" onclick="closeModalDirect()">ยกเลิก</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">✅ บันทึกเรียบร้อย!</div>
+
+<script>
+// ==================== DATA ====================
+const QUOTA_PER_MONTH = {
+  JAN: 5, FEB: 5, MAR: 5, APR: 5, MAY: 5,
+  JUN: 5, JUL: 5, AUG: 5, SEP: 5, OCT: 5, NOV: 5, DEC: 5
+};
+
+const MONTH_NAMES_TH = {
+  JAN: 'มกราคม', FEB: 'กุมภาพันธ์', MAR: 'มีนาคม', APR: 'เมษายน',
+  MAY: 'พฤษภาคม', JUN: 'มิถุนายน', JUL: 'กรกฎาคม', AUG: 'สิงหาคม',
+  SEP: 'กันยายน', OCT: 'ตุลาคม', NOV: 'พฤศจิกายน', DEC: 'ธันวาคม'
+};
+
+const MONTH_ORDER = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+const CURRENT_MONTH_INDEX = 3; // APR = index 3
+
+// Monthly usage data
+const monthData = {
+  JAN: {
+    quota: 5,
+    totalUsed: 8,
+    usedOwn: 5,
+    borrowedFrom: 'FEB',
+    borrowedCount: 3,
+    lentTo: null,
+    lentCount: 0,
+    logs: [
+      // ไม่มีรายละเอียดในข้อมูลที่ให้มา
+    ]
+  },
+  FEB: {
+    quota: 5,
+    totalUsed: 5,
+    usedOwn: 2,
+    borrowedFrom: 'MAR',
+    borrowedCount: 3,
+    lentTo: 'JAN',
+    lentCount: 3,
+    logs: []
+  },
+  MAR: {
+    quota: 5,
+    totalUsed: 5,
+    usedOwn: 2,
+    borrowedFrom: 'APR',
+    borrowedCount: 3,
+    lentTo: 'FEB',
+    lentCount: 3,
+    logs: [
+      { date: '04/03', desc: 'เลิกงานไวไปต่อ Salone', tag: 'normal', source: 'MAR' },
+      { date: '04/03', desc: 'หักโควตาไหล (กลับเกินตี 3)', tag: 'penalty', source: 'MAR' },
+      { date: '09/03', desc: 'ไป Salone เที่ยวกับลูกค้า', tag: 'borrowed', source: 'APR' },
+      { date: '18/03', desc: 'ไปหาพี่ช้าง 23.20 - 01.00', tag: 'borrowed', source: 'APR' },
+      { date: '19/03', desc: 'เที่ยวกับเพื่อน Grey\'s Chamber (เมียไปด้วย)', tag: 'free', source: '-' },
+      { date: '22/03', desc: 'เที่ยวกับพี่โอ๋ Artro (เมียไปด้วย)', tag: 'free', source: '-' },
+      { date: '23/03', desc: 'เลิกงานไว ไปหาพี่ช้าง 00.30-01.30', tag: 'borrowed', source: 'APR' },
+    ]
+  },
+  APR: {
+    quota: 5,
+    totalUsed: 3,
+    usedOwn: 2,
+    borrowedFrom: 'MAY',
+    borrowedCount: 1,
+    lentTo: 'MAR',
+    lentCount: 3,
+    logs: [
+      { date: '04/04', desc: 'เลิกงาน 20.00 ไหลไป Tonic', tag: 'normal', source: 'APR' },
+      { date: '16/04', desc: 'เลิกงาน 00.00 ไหลไป Tonic กับเด็กเอ็น', tag: 'normal', source: 'APR' },
+      { date: '16/04', desc: 'ไหลไปต่อ Arttro กลับบ้าน 05.30', tag: 'borrowed', source: 'MAY' },
+    ]
+  },
+  MAY: { quota: 5, totalUsed: 0, usedOwn: 0, borrowedFrom: null, borrowedCount: 0, lentTo: 'APR', lentCount: 1, logs: [] },
+  JUN: { quota: 5, totalUsed: 0, usedOwn: 0, borrowedFrom: null, borrowedCount: 0, lentTo: null, lentCount: 0, logs: [] },
+  JUL: { quota: 5, totalUsed: 0, usedOwn: 0, borrowedFrom: null, borrowedCount: 0, lentTo: null, lentCount: 0, logs: [] },
+  AUG: { quota: 5, totalUsed: 0, usedOwn: 0, borrowedFrom: null, borrowedCount: 0, lentTo: null, lentCount: 0, logs: [] },
+  SEP: { quota: 5, totalUsed: 0, usedOwn: 0, borrowedFrom: null, borrowedCount: 0, lentTo: null, lentCount: 0, logs: [] },
+  OCT: { quota: 5, totalUsed: 0, usedOwn: 0, borrowedFrom: null, borrowedCount: 0, lentTo: null, lentCount: 0, logs: [] },
+  NOV: { quota: 5, totalUsed: 0, usedOwn: 0, borrowedFrom: null, borrowedCount: 0, lentTo: null, lentCount: 0, logs: [] },
+  DEC: { quota: 5, totalUsed: 0, usedOwn: 0, borrowedFrom: null, borrowedCount: 0, lentTo: null, lentCount: 0, logs: [] },
+};
+
+// Red flags
+const redFlags = [
+  { date: '30/01/2026', reason: '' }
+];
+
+// ==================== RENDER ====================
+
+function getAvailableQuota(month) {
+  const d = monthData[month];
+  return d.quota - d.lentCount;
+}
+
+function getRemainingQuota(month) {
+  const available = getAvailableQuota(month);
+  return Math.max(0, available - d.usedOwn);
+}
+
+function drawDonut(canvas, used, total, borrowed, lent) {
+  const ctx = canvas.getContext('2d');
+  const size = canvas.width;
+  const center = size / 2;
+  const radius = size / 2 - 8;
+  const lineWidth = 7;
+
+  ctx.clearRect(0, 0, size, size);
+
+  // Background ring
+  ctx.beginPath();
+  ctx.arc(center, center, radius, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+  ctx.lineWidth = lineWidth;
+  ctx.stroke();
+
+  if (total === 0) return;
+
+  const startAngle = -Math.PI / 2;
+  const ownAngle = (Math.min(used - borrowed, total) / total) * Math.PI * 2;
+  const borrowedAngle = (borrowed / total) * Math.PI * 2;
+  const lentAngle = (lent / total) * Math.PI * 2;
+
+  // Lent portion (dimmed red)
+  if (lent > 0) {
+    ctx.beginPath();
+    ctx.arc(center, center, radius, startAngle, startAngle + lentAngle);
+    ctx.strokeStyle = 'rgba(211, 84, 0, 0.35)';
+    ctx.lineWidth = lineWidth;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+  }
+
+  // Own usage (green)
+  const ownStart = startAngle + lentAngle;
+  if (used - borrowed > 0) {
+    ctx.beginPath();
+    ctx.arc(center, center, radius, ownStart, ownStart + ownAngle);
+    ctx.strokeStyle = '#00a87d';
+    ctx.lineWidth = lineWidth;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+  }
+
+  // Borrowed (yellow)
+  if (borrowed > 0) {
+    const bStart = ownStart + ownAngle;
+    ctx.beginPath();
+    ctx.arc(center, center, radius, bStart, bStart + borrowedAngle);
+    ctx.strokeStyle = '#e8a317';
+    ctx.lineWidth = lineWidth;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+  }
+}
+
+function renderMonthCards() {
+  const container = document.getElementById('monthCards');
+  container.innerHTML = '';
+
+  MONTH_ORDER.forEach((month, idx) => {
+    const d = monthData[month];
+    const available = d.quota - d.lentCount;
+    const remaining = Math.max(0, available - d.usedOwn);
+    const isPast = idx < CURRENT_MONTH_INDEX;
+    const isCurrent = idx === CURRENT_MONTH_INDEX;
+    const isFuture = idx > CURRENT_MONTH_INDEX;
+    const isOver = d.borrowedCount > 0;
+
+    let statusBadge = '';
+    if (isPast || isCurrent) {
+      if (isOver) {
+        statusBadge = `<span class="badge-over">เกินโควตา +${d.borrowedCount}</span>`;
+      } else if (remaining === 0 && d.totalUsed > 0) {
+        statusBadge = `<span class="badge-over">หมดแล้ว</span>`;
+      } else if (d.totalUsed > 0) {
+        statusBadge = `<span class="badge-ok">ปกติ</span>`;
+      }
+    }
+    if (isFuture) {
+      if (d.lentCount > 0) {
+        statusBadge = `<span class="badge-over">ถูกยืมไป ${d.lentCount}</span>`;
+      } else {
+        statusBadge = `<span class="badge-future">ยังไม่ใช้</span>`;
+      }
+    }
+
+    const statusText = isPast || isCurrent
+      ? `ใช้ ${d.usedOwn + d.borrowedCount}/${available} (โควตา ${d.quota}${d.lentCount > 0 ? ` ถูกยืม ${d.lentCount}` : ''})`
+      : `โควตา ${available}/${d.quota}${d.lentCount > 0 ? ` (ถูกยืม ${d.lentCount})` : ''}`;
+
+    const barOwnPct = available > 0 ? (d.usedOwn / d.quota) * 100 : 0;
+    const barBorrowedPct = (d.borrowedCount / d.quota) * 100;
+    const barLentPct = (d.lentCount / d.quota) * 100;
+
+    // Logs HTML
+    let logsHtml = '';
+    if (d.logs.length > 0) {
+      logsHtml = d.logs.map(l => `
+        <div class="log-entry">
+          <div class="log-date">${l.date}</div>
+          <div class="log-content">
+            ${l.desc}
+            <br><span class="log-tag tag-${l.tag}">
+              ${l.tag === 'normal' ? '✅ ปกติ' : l.tag === 'penalty' ? '⚠️ หักเพิ่ม' : l.tag === 'borrowed' ? '🔄 ยืม ' + l.source : '💚 เมียไปด้วย'}
+            </span>
+          </div>
+        </div>
+      `).join('');
+    } else if (isPast) {
+      logsHtml = '<div style="text-align:center; color:var(--text-dim); font-size:12px; padding:10px;">ไม่มีรายละเอียด</div>';
+    } else {
+      logsHtml = '<div style="text-align:center; color:var(--text-dim); font-size:12px; padding:10px;">ยังไม่มีข้อมูล</div>';
+    }
+
+    // Chips
+    let chipsHtml = '';
+    if (d.usedOwn > 0) chipsHtml += `<span class="quota-chip chip-own">ใช้เอง ${d.usedOwn}</span>`;
+    if (d.borrowedCount > 0) chipsHtml += `<span class="quota-chip chip-borrowed">ยืม${d.borrowedFrom} ${d.borrowedCount}</span>`;
+    if (d.lentCount > 0) chipsHtml += `<span class="quota-chip chip-empty">ให้${d.lentTo}ยืม ${d.lentCount}</span>`;
+    if (remaining > 0) chipsHtml += `<span class="quota-chip chip-remaining">เหลือ ${remaining}</span>`;
+    if (remaining === 0 && (isPast || isCurrent)) chipsHtml += `<span class="quota-chip chip-empty">หมดแล้ว!</span>`;
+
+    // Countdown dots
+    let dotsHtml = '';
+    for (let i = 0; i < d.quota; i++) {
+      if (i < d.lentCount) {
+        dotsHtml += '<div class="countdown-dot" style="background:var(--red);opacity:0.4;"></div>';
+      } else if (i < d.lentCount + d.usedOwn) {
+        dotsHtml += '<div class="countdown-dot used"></div>';
+      } else if (i < d.lentCount + d.usedOwn + d.borrowedCount) {
+        // shouldn't happen within 5 dots, but just in case
+        dotsHtml += '<div class="countdown-dot borrowed"></div>';
+      } else {
+        dotsHtml += '<div class="countdown-dot remaining"></div>';
+      }
+    }
+
+    const card = document.createElement('div');
+    card.className = 'month-card';
+    if (isCurrent) card.style.border = '2px solid rgba(108,92,231,0.35)';
+    card.innerHTML = `
+      <div class="month-header" onclick="toggleMonth(this)">
+        <div class="month-chart">
+          <canvas width="112" height="112" id="chart-${month}"></canvas>
+          <div class="chart-center">${d.usedOwn + d.borrowedCount}</div>
+        </div>
+        <div class="month-info">
+          <div class="month-name">
+            ${isCurrent ? '👉 ' : ''}${month} ${statusBadge}
+          </div>
+          <div class="month-status">${statusText}</div>
+          <div class="month-bar">
+            <div class="month-bar-fill month-bar-lent" style="width:${barLentPct}%"></div>
+            <div class="month-bar-fill month-bar-own" style="width:${barOwnPct}%"></div>
+            <div class="month-bar-fill month-bar-borrowed" style="width:${barBorrowedPct}%"></div>
+          </div>
+        </div>
+        <div class="month-chevron">▼</div>
+      </div>
+      <div class="month-detail">
+        <div class="month-detail-inner">
+          <div class="quota-breakdown">${chipsHtml}</div>
+          <div class="countdown-strip">${dotsHtml}</div>
+          <div style="margin-top:12px;">${logsHtml}</div>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+
+    // Draw donut
+    setTimeout(() => {
+      const canvas = document.getElementById(`chart-${month}`);
+      if (canvas) {
+        drawDonut(canvas, d.usedOwn + d.borrowedCount, d.quota, d.borrowedCount, d.lentCount);
+      }
+    }, 100);
+  });
+}
+
+function toggleMonth(el) {
+  const card = el.closest('.month-card');
+  card.classList.toggle('expanded');
+}
+
+function updateStats() {
+  let totalUsed = 0;
+  let totalBorrowed = 0;
+  let monthsWithData = 0;
+
+  MONTH_ORDER.forEach((month, idx) => {
+    const d = monthData[month];
+    if (idx <= CURRENT_MONTH_INDEX) {
+      totalUsed += d.usedOwn + d.borrowedCount;
+      totalBorrowed += d.borrowedCount;
+      monthsWithData++;
+    }
+  });
+
+  // Remaining for future months
+  let totalRemaining = 0;
+  MONTH_ORDER.forEach((month, idx) => {
+    if (idx > CURRENT_MONTH_INDEX) {
+      totalRemaining += monthData[month].quota - monthData[month].lentCount;
+    }
+  });
+
+  document.getElementById('totalUsed').textContent = totalUsed;
+  document.getElementById('totalRemaining').textContent = totalRemaining;
+  document.getElementById('totalBorrowed').textContent = totalBorrowed;
+  document.getElementById('avgPerMonth').textContent = monthsWithData > 0 ? (totalUsed / monthsWithData).toFixed(1) : '0';
+
+  // Psych banner for current month
+  const curr = monthData[MONTH_ORDER[CURRENT_MONTH_INDEX]];
+  const currAvail = curr.quota - curr.lentCount;
+  const currRemain = Math.max(0, currAvail - curr.usedOwn);
+
+  document.getElementById('psychNumber').textContent = currRemain;
+  document.getElementById('psychLabel').textContent = `โควตาเหลือเดือน ${MONTH_ORDER[CURRENT_MONTH_INDEX]}`;
+
+  if (currRemain === 0) {
+    document.getElementById('psychSub').textContent = curr.borrowedCount > 0
+      ? `⚠️ ใช้หมดแล้ว! ยืม ${curr.borrowedFrom} มา ${curr.borrowedCount} วัน`
+      : '⚠️ ใช้หมดแล้วเดือนนี้!';
+    document.getElementById('psychBanner').style.background = 'linear-gradient(135deg, #d63031, #e17055)';
+  } else if (currRemain <= 1) {
+    document.getElementById('psychSub').textContent = '⚡ เหลือน้อยมาก! คิดให้ดีก่อนไหล';
+    document.getElementById('psychBanner').style.background = 'linear-gradient(135deg, #e17055, #fdcb6e)';
+  } else {
+    document.getElementById('psychSub').textContent = 'ใช้อย่างประหยัด อย่าให้หมดก่อนสิ้นเดือน';
+    document.getElementById('psychBanner').style.background = 'linear-gradient(135deg, var(--accent), #a29bfe)';
+  }
+}
+
+// ==================== MODAL ====================
+
+function openModal() {
+  document.getElementById('modalOverlay').classList.add('active');
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('logDate').value = '2026-04-17';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) {
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+}
+
+function closeModalDirect() {
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+function submitLog() {
+  const date = document.getElementById('logDate').value;
+  const type = document.getElementById('logType').value;
+  const detail = document.getElementById('logDetail').value;
+  const time = document.getElementById('logTime').value;
+  const penalty = document.getElementById('logPenalty').checked;
+  const wifeThere = document.getElementById('logWifeThere').checked;
+
+  if (!date || !detail) {
+    alert('กรุณากรอกวันที่และรายละเอียด');
+    return;
+  }
+
+  // Format date
+  const [y, m, d] = date.split('-');
+  const dateStr = `${d}/${m}`;
+  const monthIdx = parseInt(m) - 1;
+  const monthKey = MONTH_ORDER[monthIdx];
+
+  // Determine tag
+  let tag = 'normal';
+  let source = monthKey;
+  if (wifeThere) {
+    tag = 'free';
+    source = '-';
+  } else if (penalty) {
+    tag = 'penalty';
+  }
+
+  const logEntry = {
+    date: dateStr,
+    desc: `${type}: ${detail}${time ? ' (' + time + ')' : ''}${penalty ? ' — กลับเกินตี 3' : ''}`,
+    tag: tag,
+    source: source
+  };
+
+  // Add to data (in-memory)
+  if (!wifeThere) {
+    const md = monthData[monthKey];
+    const available = md.quota - md.lentCount;
+
+    if (md.usedOwn < available) {
+      md.usedOwn++;
+    } else {
+      // Need to borrow from next month
+      const nextIdx = MONTH_ORDER.indexOf(monthKey) + 1;
+      if (nextIdx < 12) {
+        const nextMonth = MONTH_ORDER[nextIdx];
+        md.borrowedFrom = nextMonth;
+        md.borrowedCount++;
+        monthData[nextMonth].lentTo = monthKey;
+        monthData[nextMonth].lentCount++;
+        logEntry.tag = 'borrowed';
+        logEntry.source = nextMonth;
+      }
+    }
+    md.totalUsed++;
+
+    if (penalty) {
+      // Additional penalty
+      if (md.usedOwn < available) {
+        md.usedOwn++;
+      } else {
+        const nextIdx = MONTH_ORDER.indexOf(monthKey) + 1;
+        if (nextIdx < 12) {
+          const nextMonth = MONTH_ORDER[nextIdx];
+          md.borrowedFrom = nextMonth;
+          md.borrowedCount++;
+          monthData[nextMonth].lentTo = monthKey;
+          monthData[nextMonth].lentCount++;
+        }
+      }
+      md.totalUsed++;
+      md.logs.push({
+        date: dateStr,
+        desc: 'หักโควตาเพิ่ม (กลับเกินตี 3)',
+        tag: 'penalty',
+        source: monthKey
+      });
+    }
+  }
+
+  monthData[monthKey].logs.push(logEntry);
+
+  // Re-render
+  renderMonthCards();
+  updateStats();
+  closeModalDirect();
+  showToast();
+
+  // Clear form
+  document.getElementById('logDetail').value = '';
+  document.getElementById('logTime').value = '';
+  document.getElementById('logPenalty').checked = false;
+  document.getElementById('logWifeThere').checked = false;
+}
+
+function showToast() {
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ==================== INIT ====================
+renderMonthCards();
+updateStats();
+
+// Auto-expand current month
+setTimeout(() => {
+  const cards = document.querySelectorAll('.month-card');
+  if (cards[CURRENT_MONTH_INDEX]) {
+    cards[CURRENT_MONTH_INDEX].classList.add('expanded');
+  }
+}, 200);
+</script>
+
+</body>
+</html>

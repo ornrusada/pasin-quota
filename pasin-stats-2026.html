@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>สถิติการไหล ปศิน 2026 — ตัวเลขไม่โกหก</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg: #f7f7fb;
+    --card: #ffffff;
+    --border: #e8e8f0;
+    --text: #1a1a2e;
+    --dim: #6b7280;
+    --muted: #9ca3af;
+    --danger: #e74c3c;
+    --danger-light: #fff5f5;
+    --warning: #e67e22;
+    --warning-light: #fff8f0;
+    --accent: #6c5ce7;
+    --accent-light: #f0eeff;
+    --success: #27ae60;
+    --dark: #2c3e50;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Prompt', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 36px 0 24px;
+  }
+  .header-emoji {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .header .sub {
+    font-size: 13px;
+    color: var(--dim);
+    margin-top: 4px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Big Number */
+  .big-stat {
+    text-align: center;
+    padding: 24px 0;
+  }
+  .big-number {
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .big-unit {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dim);
+    margin-top: 4px;
+  }
+  .big-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  /* Donut Chart */
+  .donut-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 12px 0;
+  }
+  .donut-wrapper {
+    position: relative;
+    width: 160px;
+    height: 160px;
+  }
+  .donut-wrapper svg {
+    width: 160px;
+    height: 160px;
+    transform: rotate(-90deg);
+  }
+  .donut-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .donut-center .pct {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--danger);
+  }
+  .donut-center .pct-label {
+    font-size: 11px;
+    color: var(--dim);
+  }
+  .donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--dim);
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  /* Bar Chart */
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 6px;
+    height: 160px;
+    padding: 0 4px;
+    margin: 12px 0 8px;
+  }
+  .bar-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+  }
+  .bar {
+    width: 100%;
+    border-radius: 6px 6px 2px 2px;
+    position: relative;
+    transition: height 0.6s ease;
+    min-height: 4px;
+  }
+  .bar-value {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .bar-label {
+    font-size: 9px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .bar-limit {
+    width: 100%;
+    height: 2px;
+    border-top: 2px dashed var(--danger);
+    position: absolute;
+    opacity: 0.4;
+  }
+
+  /* Comparison */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 8px 0;
+  }
+  .compare-item {
+    padding: 14px;
+    border-radius: 14px;
+    text-align: center;
+  }
+  .compare-item .ci-number {
+    font-size: 28px;
+    font-weight: 800;
+  }
+  .compare-item .ci-label {
+    font-size: 11px;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  .compare-item .ci-sub {
+    font-size: 10px;
+    margin-top: 4px;
+    opacity: 0.7;
+  }
+
+  /* Timeline visual */
+  .year-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 8px 0;
+  }
+  .day-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 2px;
+    background: #e8e8f0;
+  }
+  .day-dot.drink { background: var(--danger); }
+  .day-dot.recover { background: var(--warning); opacity: 0.6; }
+  .day-dot.normal { background: #d4edda; }
+
+  /* Health Section */
+  .health-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  .health-label {
+    font-size: 11px;
+    color: var(--dim);
+    width: 80px;
+    flex-shrink: 0;
+    font-weight: 500;
+  }
+  .health-bar-bg {
+    flex: 1;
+    height: 20px;
+    background: #f0f0f5;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  .health-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  /* Quote */
+  .quote-card {
+    background: linear-gradient(135deg, #1a1a2e, #2d2d50);
+    border-radius: 20px;
+    padding: 24px 20px;
+    margin-bottom: 16px;
+    text-align: center;
+    color: #fff;
+  }
+  .quote-card .q-icon {
+    font-size: 36px;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .quote-card .q-text {
+    font-size: 14px;
+    line-height: 1.8;
+    font-weight: 400;
+    color: rgba(255,255,255,0.9);
+  }
+  .quote-card .q-highlight {
+    color: #ff6b6b;
+    font-weight: 700;
+  }
+  .quote-card .q-green {
+    color: #51cf66;
+    font-weight: 700;
+  }
+
+  /* Money */
+  .money-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    font-size: 12px;
+  }
+  .money-row:last-child { border-bottom: none; }
+  .money-label { color: var(--dim); }
+  .money-value { font-weight: 700; }
+
+  /* Frequency */
+  .freq-visual {
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+    padding: 8px 0;
+    justify-content: center;
+  }
+  .freq-day {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    background: #e8f5e9;
+    font-size: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .freq-day.drink {
+    background: var(--danger);
+  }
+  .freq-day.recover {
+    background: #ffccbc;
+  }
+
+  /* Liver meter */
+  .liver-meter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--danger-light);
+    border-radius: 14px;
+    margin: 12px 0;
+    border: 1px solid rgba(231,76,60,0.15);
+  }
+  .liver-emoji {
+    font-size: 40px;
+    flex-shrink: 0;
+  }
+  .liver-text {
+    font-size: 12px;
+    color: var(--danger);
+    line-height: 1.6;
+    font-weight: 500;
+  }
+
+  /* CTA */
+  .cta-card {
+    background: linear-gradient(135deg, var(--accent), #a855f7);
+    border-radius: 20px;
+    padding: 24px 20px;
+    text-align: center;
+    color: #fff;
+    margin-top: 20px;
+  }
+  .cta-card h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .cta-card p {
+    font-size: 13px;
+    line-height: 1.7;
+    opacity: 0.9;
+  }
+
+  /* Separator */
+  .sep {
+    text-align: center;
+    padding: 8px 0;
+    color: var(--muted);
+    font-size: 18px;
+    letter-spacing: 8px;
+  }
+
+  /* Place stats */
+  .place-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .place-row:last-child { border-bottom: none; }
+  .place-rank {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: var(--danger-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--danger);
+    flex-shrink: 0;
+  }
+  .place-info { flex: 1; }
+  .place-name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .place-detail {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+  .place-count {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--danger);
+  }
+
+  .fade-in {
+    animation: fadeIn 0.6s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .footer {
+    text-align: center;
+    padding: 24px 0;
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header fade-in">
+    <span class="header-emoji">📊</span>
+    <h1>สถิติการไหลของปศิน<br>ตัวเลขไม่โกหก</h1>
+    <div class="sub">ข้อมูลจาก Google Calendar ต.ค. 2025 — เม.ย. 2026</div>
+  </div>
+
+  <!-- Big Stat: Total -->
+  <div class="card fade-in">
+    <div class="big-stat">
+      <div class="big-number" style="color: var(--danger);">31</div>
+      <div class="big-unit">ครั้งที่ออกไหลใน 7 เดือน</div>
+      <div class="big-desc">เฉลี่ย 4.4 ครั้ง/เดือน — เกือบทุกสัปดาห์</div>
+    </div>
+  </div>
+
+  <!-- Donut: 365 days -->
+  <div class="card fade-in">
+    <div class="card-title">🥧 ถ้าใช้โควตาเต็ม 60 วัน/ปี ชีวิตหายไปเท่าไหร่?</div>
+    <div class="donut-container">
+      <div class="donut-wrapper">
+        <svg viewBox="0 0 36 36">
+          <circle cx="18" cy="18" r="15.5" fill="none" stroke="#f0f0f5" stroke-width="3"/>
+          <!-- Normal 245 days = 67.1% -->
+          <circle cx="18" cy="18" r="15.5" fill="none" stroke="#d4edda" stroke-width="3"
+            stroke-dasharray="65.3 34.7" stroke-dashoffset="0"/>
+          <!-- Recovery 60 days = 16.4% -->
+          <circle cx="18" cy="18" r="15.5" fill="none" stroke="var(--warning)" stroke-width="3"
+            stroke-dasharray="16.4 83.6" stroke-dashoffset="-65.3" opacity="0.7"/>
+          <!-- Drinking 60 days = 16.4% -->
+          <circle cx="18" cy="18" r="15.5" fill="none" stroke="var(--danger)" stroke-width="3"
+            stroke-dasharray="16.4 83.6" stroke-dashoffset="-81.7"/>
+        </svg>
+        <div class="donut-center">
+          <div class="pct">32.8%</div>
+          <div class="pct-label">ชีวิตที่เสียไป</div>
+        </div>
+      </div>
+      <div class="donut-legend">
+        <div class="legend-row">
+          <div class="legend-dot" style="background: var(--danger);"></div>
+          <span><strong>60 วัน</strong> กินเหล้า/ไหล</span>
+        </div>
+        <div class="legend-row">
+          <div class="legend-dot" style="background: var(--warning); opacity:0.7;"></div>
+          <span><strong>60 วัน</strong> พักฟื้น</span>
+        </div>
+        <div class="legend-row">
+          <div class="legend-dot" style="background: #d4edda;"></div>
+          <span><strong>245 วัน</strong> ปกติ</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align: center; font-size: 12px; color: var(--danger); font-weight: 600; padding: 8px; background: var(--danger-light); border-radius: 10px;">
+      120 วัน จาก 365 วัน หายไปกับเหล้าและฟื้นตัว
+    </div>
+  </div>
+
+  <!-- Visual: 365 days -->
+  <div class="card fade-in">
+    <div class="card-title">📅 1 ปี = 365 วัน — แต่ละจุดคือ 1 วัน</div>
+    <div class="year-strip" id="yearStrip"></div>
+    <div style="display: flex; gap: 16px; justify-content: center; margin-top: 8px;">
+      <div class="legend-row"><div class="legend-dot" style="background: var(--danger); width:8px; height:8px;"></div><span style="font-size:10px;">ดื่ม (60)</span></div>
+      <div class="legend-row"><div class="legend-dot" style="background: var(--warning); opacity:0.6; width:8px; height:8px;"></div><span style="font-size:10px;">ฟื้นตัว (60)</span></div>
+      <div class="legend-row"><div class="legend-dot" style="background: #d4edda; width:8px; height:8px;"></div><span style="font-size:10px;">วันปกติ (245)</span></div>
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <!-- Monthly Bar Chart -->
+  <div class="card fade-in">
+    <div class="card-title">📊 จำนวนไหลรายเดือน</div>
+    <div style="text-align: right; font-size: 10px; color: var(--danger); margin-bottom: 4px;">--- เส้นโควตา 5 ครั้ง/เดือน</div>
+    <div class="bar-chart">
+      <div class="bar-col">
+        <div class="bar" style="height: 75%; background: linear-gradient(180deg, var(--danger), #ff8a80);">
+          <div class="bar-value">6</div>
+          <div class="bar-limit" style="bottom: 52px;"></div>
+        </div>
+        <div class="bar-label">ต.ค.</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar" style="height: 50%; background: linear-gradient(180deg, var(--danger), #ff8a80);">
+          <div class="bar-value">4</div>
+        </div>
+        <div class="bar-label">พ.ย.</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar" style="height: 37%; background: linear-gradient(180deg, var(--warning), #ffcc80);">
+          <div class="bar-value">3</div>
+        </div>
+        <div class="bar-label">ธ.ค.</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar" style="height: 100%; background: linear-gradient(180deg, #b71c1c, var(--danger));">
+          <div class="bar-value" style="color: var(--danger);">8</div>
+        </div>
+        <div class="bar-label">ม.ค.</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar" style="height: 62%; background: linear-gradient(180deg, var(--danger), #ff8a80);">
+          <div class="bar-value">5</div>
+        </div>
+        <div class="bar-label">ก.พ.</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar" style="height: 62%; background: linear-gradient(180deg, var(--danger), #ff8a80);">
+          <div class="bar-value">5</div>
+        </div>
+        <div class="bar-label">มี.ค.</div>
+      </div>
+      <div class="bar-col">
+        <div class="bar" style="height: 37%; background: linear-gradient(180deg, var(--warning), #ffcc80);">
+          <div class="bar-value">3</div>
+        </div>
+        <div class="bar-label">เม.ย.</div>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 8px; font-size: 11px; color: var(--dim);">
+      ม.ค. 2026 = สูงสุด <strong style="color: var(--danger);">8 ครั้ง</strong> เกินโควตา 60%
+    </div>
+  </div>
+
+  <!-- Frequency Visual -->
+  <div class="card fade-in">
+    <div class="card-title">🔁 ความถี่: ดื่มทุก 6 วัน</div>
+    <div style="text-align: center; font-size: 12px; color: var(--dim); margin-bottom: 8px;">
+      จำลอง 30 วัน — แต่ละช่องคือ 1 วัน
+    </div>
+    <div class="freq-visual">
+      <div class="freq-day drink"></div>
+      <div class="freq-day recover"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day drink"></div>
+      <div class="freq-day recover"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day drink"></div>
+      <div class="freq-day recover"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day drink"></div>
+      <div class="freq-day recover"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day drink"></div>
+      <div class="freq-day recover"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+      <div class="freq-day"></div>
+    </div>
+    <div style="display: flex; gap: 16px; justify-content: center; margin-top: 6px;">
+      <div class="legend-row"><div class="legend-dot" style="background: var(--danger); width:8px; height:8px;"></div><span style="font-size:10px;">วันดื่ม</span></div>
+      <div class="legend-row"><div class="legend-dot" style="background: #ffccbc; width:8px; height:8px;"></div><span style="font-size:10px;">วันฟื้นตัว</span></div>
+      <div class="legend-row"><div class="legend-dot" style="background: #e8f5e9; width:8px; height:8px;"></div><span style="font-size:10px;">วันปกติ</span></div>
+    </div>
+    <div style="text-align: center; margin-top: 10px; font-size: 11px; color: var(--danger); font-weight: 600;">
+      ตับต้องการ 7-10 วัน ในการฟื้นตัวเต็มที่ — แต่ได้แค่ 5 วัน
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <!-- Late night stat -->
+  <div class="card fade-in">
+    <div class="card-title">🕐 กลับเกินตี 3 — สถิติที่น่าตกใจ</div>
+    <div class="compare-grid">
+      <div class="compare-item" style="background: var(--danger-light);">
+        <div class="ci-number" style="color: var(--danger);">10</div>
+        <div class="ci-label" style="color: var(--danger);">ครั้งที่กลับเกินตี 3</div>
+        <div class="ci-sub" style="color: var(--dim);">จาก 31 ครั้ง</div>
+      </div>
+      <div class="compare-item" style="background: var(--danger-light);">
+        <div class="ci-number" style="color: var(--danger);">32%</div>
+        <div class="ci-label" style="color: var(--danger);">อัตราการกลับดึก</div>
+        <div class="ci-sub" style="color: var(--dim);">เกือบ 1 ใน 3</div>
+      </div>
+    </div>
+    <div style="padding: 12px; background: var(--warning-light); border-radius: 12px; margin-top: 8px;">
+      <div style="font-size: 12px; color: var(--dim); line-height: 1.8;">
+        <strong style="color: var(--text);">เวลากลับบ้านที่บันทึกไว้:</strong><br>
+        03.30 · 04.30 · 05.00 · 05.00 · 05.30 · 05.44 · 06.00 · 06.00 · 06.30 · 07.27<br><br>
+        <strong style="color: var(--danger);">เฉลี่ยกลับบ้าน: ตี 5.30</strong><br>
+        <span style="color: var(--muted);">คนปกตินอนตั้งแต่ 4-5 ทุ่ม — ตื่นอีกทีก็เกือบสาย</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Places -->
+  <div class="card fade-in">
+    <div class="card-title">📍 สถานที่ไปบ่อยที่สุด</div>
+    <div class="place-row">
+      <div class="place-rank">1</div>
+      <div class="place-info">
+        <div class="place-name">Arttro Studio Barber</div>
+        <div class="place-detail">กลับเกินตี 3 ทุกครั้ง — ตี 5 ถึง 6 โมงเช้า</div>
+      </div>
+      <div class="place-count">7</div>
+    </div>
+    <div class="place-row">
+      <div class="place-rank">2</div>
+      <div class="place-info">
+        <div class="place-name">Salone</div>
+        <div class="place-detail">มักเป็นจุดต่อหลังเลิกงาน</div>
+      </div>
+      <div class="place-count">5</div>
+    </div>
+    <div class="place-row">
+      <div class="place-rank">3</div>
+      <div class="place-info">
+        <div class="place-name">Tonic</div>
+        <div class="place-detail">"แจ้งว่าจะอยู่แป๊บเดียว" — ไม่เคยเป็นจริง</div>
+      </div>
+      <div class="place-count">5</div>
+    </div>
+    <div class="place-row">
+      <div class="place-rank">4</div>
+      <div class="place-info">
+        <div class="place-name">อื่นๆ</div>
+        <div class="place-detail">Repeat, Pablo, Black Cabin, Tuba, K25</div>
+      </div>
+      <div class="place-count">14</div>
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <!-- Health Impact -->
+  <div class="card fade-in">
+    <div class="card-title">🏥 ผลกระทบต่อสุขภาพ</div>
+    <div class="health-bar-row">
+      <div class="health-label">ตับ</div>
+      <div class="health-bar-bg">
+        <div class="health-bar-fill" style="width: 75%; background: linear-gradient(90deg, var(--danger), #ff8a80);">75%</div>
+      </div>
+    </div>
+    <div class="health-bar-row">
+      <div class="health-label">ความดัน</div>
+      <div class="health-bar-bg">
+        <div class="health-bar-fill" style="width: 60%; background: linear-gradient(90deg, var(--warning), #ffcc80);">60%</div>
+      </div>
+    </div>
+    <div class="health-bar-row">
+      <div class="health-label">คุณภาพนอน</div>
+      <div class="health-bar-bg">
+        <div class="health-bar-fill" style="width: 85%; background: linear-gradient(90deg, var(--danger), #ff8a80);">85%</div>
+      </div>
+    </div>
+    <div class="health-bar-row">
+      <div class="health-label">สุขภาพจิต</div>
+      <div class="health-bar-bg">
+        <div class="health-bar-fill" style="width: 50%; background: linear-gradient(90deg, var(--warning), #ffcc80);">50%</div>
+      </div>
+    </div>
+    <div style="text-align: center; font-size: 10px; color: var(--muted); margin-top: 8px;">
+      * ระดับความเสี่ยง จากพฤติกรรมดื่มหนัก 60 ครั้ง/ปี (อ้างอิง WHO)
+    </div>
+
+    <div class="liver-meter">
+      <div class="liver-emoji">🫁</div>
+      <div class="liver-text">
+        ดื่มหนักทุก <strong>6 วัน</strong> = ตับไม่มีเวลาฟื้นตัว<br>
+        ทางการแพทย์: <strong>เข้าข่ายดื่มหนักเรื้อรัง</strong><br>
+        เพิ่มความเสี่ยงตับอักเสบ ตับแข็ง มะเร็งตับ
+      </div>
+    </div>
+  </div>
+
+  <!-- Compare: What could you do with 120 days -->
+  <div class="card fade-in">
+    <div class="card-title">💡 120 วัน ที่เสียไป — ทำอะไรได้บ้าง?</div>
+    <div class="compare-grid">
+      <div class="compare-item" style="background: var(--accent-light);">
+        <div class="ci-number" style="color: var(--accent);">🏋️</div>
+        <div class="ci-label" style="color: var(--accent);">ออกกำลัง 120 ครั้ง</div>
+        <div class="ci-sub" style="color: var(--dim);">ร่างกายเปลี่ยนไปเลย</div>
+      </div>
+      <div class="compare-item" style="background: var(--accent-light);">
+        <div class="ci-number" style="color: var(--accent);">📚</div>
+        <div class="ci-label" style="color: var(--accent);">อ่านหนังสือ 40 เล่ม</div>
+        <div class="ci-sub" style="color: var(--dim);">เล่มละ 3 วัน</div>
+      </div>
+      <div class="compare-item" style="background: var(--accent-light);">
+        <div class="ci-number" style="color: var(--accent);">👨‍👩‍👧</div>
+        <div class="ci-label" style="color: var(--accent);">ใช้เวลากับครอบครัว</div>
+        <div class="ci-sub" style="color: var(--dim);">120 วันมีค่ามากแค่ไหน</div>
+      </div>
+      <div class="compare-item" style="background: var(--accent-light);">
+        <div class="ci-number" style="color: var(--accent);">💰</div>
+        <div class="ci-label" style="color: var(--accent);">เงินที่ประหยัดได้</div>
+        <div class="ci-sub" style="color: var(--dim);">ไหลครั้งละ 2,000 = 120,000/ปี</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <!-- Quote Card -->
+  <div class="quote-card fade-in">
+    <span class="q-icon">💔</span>
+    <div class="q-text">
+      ไหล <span class="q-highlight">31 ครั้ง</span> ใน 7 เดือน<br>
+      กลับเกินตี 3 ถึง <span class="q-highlight">10 ครั้ง</span><br>
+      ชีวิต 1 ปี หายไป <span class="q-highlight">32.8%</span><br><br>
+      ถ้าเวลาเหล่านี้เอามา<br>
+      <span class="q-green">ดูแลสุขภาพ ดูแลครอบครัว ดูแลตัวเอง</span><br><br>
+      ชีวิตจะดีขึ้นแค่ไหน?
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-card fade-in">
+    <h3>เวลาเปลี่ยนแปลงคือตอนนี้</h3>
+    <p>
+      ทุกครั้งที่คิดจะไหล<br>
+      ให้นึกถึงตัวเลข <strong>32.8%</strong><br>
+      ของชีวิตที่หายไป<br><br>
+      ไม่มีใครได้เวลากลับคืนมา 💜
+    </p>
+  </div>
+
+  <div class="footer">
+    ข้อมูลจาก Google Calendar ต.ค. 2025 — เม.ย. 2026<br>
+    สร้างด้วยความห่วงใย ❤️
+  </div>
+
+</div>
+
+<script>
+  // Generate 365-day strip
+  const strip = document.getElementById('yearStrip');
+  // 60 drink days, 60 recover days, 245 normal
+  const days = [];
+  for (let i = 0; i < 365; i++) {
+    // Every 6 days: drink + recover
+    if (i % 6 === 0) days.push('drink');
+    else if (i % 6 === 1) days.push('recover');
+    else days.push('normal');
+  }
+  days.forEach(type => {
+    const dot = document.createElement('div');
+    dot.className = 'day-dot ' + type;
+    strip.appendChild(dot);
+  });
+</script>
+
+</body>
+</html>
